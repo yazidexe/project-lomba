@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <link rel="stylesheet" href="style.css" />
+    <title>ShineOn!</title>
+  </head>
+  <body>
+    <div class="container">
+      <nav class="navbar">
+        <div class="navbar-brand">🧹 Kumpulkan sampah, Cegah kekeruhan sungai!</div>
+        <div class="navbar-controls">
+          <label class="muted">Level:</label>
+          <select id="levelSelect">
+            <option value="easy">Easy</option>
+            <option value="normal" selected>Normal</option>
+          </select>
+          <button id="startBtn">Mulai</button>
+          <button id="restartBtn" class="secondary">Ulang</button>
+        </div>
+      </nav>
+
+      <div class="panel">
+        <div class="top-info">
+          <div class="stat">Skor: <span id="scoreDisplay">0</span></div>
+          <div class="stat">Waktu: <span id="timeDisplay">30</span>s</div>
+          <div class="muted">Note: untuk menggerakkan tong sambah gunakan WASD atau tombol PANAH</div>
+        </div>
+
+        <div class="canvas-wrap">
+          <div class="game-area panel" style="flex: 3">
+            <canvas id="gameCanvas" width="720" height="420"></canvas>
+          </div>
+          <aside class="sidebar panel">
+            <h3 style="margin: 0 0 8px 0">Instruksi Singkat</h3>
+            <p class="muted" style="margin-top: 6px">Kumpulkan sampah (Sampah besar, kaleng, & kulit pisang) sebanyak-banyaknya dalam waktu yang ditentukan. Setiap sampah memberi nilai berbeda.</p>
+            <div style="margin-top: 12px">
+              <b>Jenis Sampah</b>
+              <ul style="padding-left: 18px; margin: 6px 0 0 0">
+                <li>Sampah besar: 10 poin</li>
+                <li>Kaleng: 8 poin</li>
+                <li>Kulit Pisang: 5 poin</li>
+              </ul>
+             </div>
+            <div class="footer-note">miniarti dahlan</div>
+          </aside>
+        </div>
+      </div>
+      <div class="watermark">karya: Fauzan anris & Aufa yazid | XII PPLG 2</div>
+    </div>
+
+     <!-- Popup -->
+      <div id="popup" class="popup">
+        <div class="popup-content">
+          <h2>Waktu habis!</h2>
+          <p id="popup-message"></p>
+          <button id="close-popup">Tutup</button>
+        </div>
+      </div>
+
+    <script src="script.js"></script>
+  </body>
+</html>
