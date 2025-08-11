@@ -1,3 +1,10 @@
+// --- OPEN SCREEN ---
+const welcomeScreen = document.getElementById("welcome-screen");
+
+welcomeScreen.addEventListener("click", () => {
+  welcomeScreen.classList.add("slide-up");
+});
+
 // --- GAME PROTOTYPE JS ---
 (function () {
   // Config
@@ -8,6 +15,30 @@
   const startBtn = document.getElementById("startBtn");
   const restartBtn = document.getElementById("restartBtn");
   const levelSelect = document.getElementById("levelSelect");
+
+  // Fungsi responsive canvas
+  function resizeCanvas() {
+    const container = canvas.parentElement;
+    const containerWidth = container.clientWidth;
+    const containerHeight = container.clientHeight;
+
+    const aspectRatio = 720 / 420; // rasio asli canvas
+
+    let newWidth = containerWidth;
+    let newHeight = containerWidth / aspectRatio;
+
+    if (newHeight > containerHeight) {
+      newHeight = containerHeight;
+      newWidth = newHeight * aspectRatio;
+    }
+
+    // Set style ukuran canvas supaya responsive (CSS pixel)
+    canvas.style.width = `${newWidth}px`;
+    canvas.style.height = `${newHeight}px`;
+  }
+
+  window.addEventListener("resize", resizeCanvas);
+  resizeCanvas(); // panggil saat awal
 
   let state = {
     running: false,
@@ -147,7 +178,7 @@
   }
 
   function showPopup(message) {
-    document.getElementById("popup-message").textContent = message;
+    document.getElementById("popup-message").innerHTML = message;
     document.getElementById("popup").style.display = "flex";
   }
 
@@ -155,10 +186,18 @@
     document.getElementById("popup").style.display = "none";
   });
 
+  const tips = [
+    "Ajak tetangga untuk memilah sampah di rumah ya!",
+    "Kurangi penggunaan plastik sekali pakai.",
+    "Gunakan botol minum isi ulang untuk mengurangi sampah.",
+    "Pisahkan sampah organik dan anorganik.",
+  ];
+
   function endRound() {
     state.running = false;
+    const randomTip = tips[Math.floor(Math.random() * tips.length)];
     setTimeout(() => {
-      showPopup("Skor kamu: " + state.score + "\nTips: Ajak tetangga untuk memilah sampah di rumah ya!");
+      showPopup(`Skor kamu: ${state.score} <br> Tips: ${randomTip}`);
     }, 80);
   }
 

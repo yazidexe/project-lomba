@@ -7,6 +7,22 @@
     <title>ShineOn!</title>
   </head>
   <body>
+    <!-- OPEN SCREEN -->
+    <div id="welcome-screen" class="welcome-screen">
+      <div class="welcome-content">
+        <h1>🧹 Selamat Datang di ShineOn!</h1>
+        <p>Tap di mana saja untuk lanjut</p>
+      </div>
+
+      <!-- Wave -->
+      <div class="wave">
+        <svg viewBox="0 0 1440 320" preserveAspectRatio="none">
+          <path d="M0,192L48,181.3C96,171,192,149,288,144C384,139,480,149,576,149.3C672,149,768,139,864,154.7C960,171,1056,213,1152,229.3C1248,245,1344,235,1392,229.3L1440,224V320H0Z"></path>
+        </svg>
+      </div>
+    </div>
+
+    <!-- NAVBAR -->
     <div class="container">
       <nav class="navbar">
         <div class="navbar-brand">🧹 Kumpulkan sampah, Cegah kekeruhan sungai!</div>
@@ -21,6 +37,7 @@
         </div>
       </nav>
 
+      <!-- PANEL GAME -->
       <div class="panel">
         <div class="top-info">
           <div class="stat">Skor: <span id="scoreDisplay">0</span></div>
@@ -42,22 +59,26 @@
                 <li>Kaleng: 8 poin</li>
                 <li>Kulit Pisang: 5 poin</li>
               </ul>
-             </div>
-            <div class="footer-note">miniarti dahlan</div>
+            </div>
+            <div class="footer-note">
+              Untuk game <b>ShineOn</b> hanya bisa dimainkan di versi desktop ya! <br />
+              <i>khusus mobile bisa klik tombol ini ya untuk memain kan <b>Quiz ShineOn</b></i>
+              <a href="quiz.html" class="quiz-button"> Quiz ShineOn!</a>
+            </div>
           </aside>
         </div>
       </div>
       <div class="watermark">karya: Fauzan anris & Aufa yazid | XII PPLG 2</div>
     </div>
 
-     <!-- Popup -->
-      <div id="popup" class="popup">
-        <div class="popup-content">
-          <h2>Waktu habis!</h2>
-          <p id="popup-message"></p>
-          <button id="close-popup">Tutup</button>
-        </div>
+    <!-- Popup -->
+    <div id="popup" class="popup">
+      <div class="popup-content">
+        <h2>Waktu habis!</h2>
+        <p id="popup-message"></p>
+        <button id="close-popup">Tutup</button>
       </div>
+    </div>
 
     <script src="script.js"></script>
   </body>

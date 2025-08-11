@@ -1,0 +1,332 @@
+<!DOCTYPE html>
+<html lang="id">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>ShineOn Quiz!</title>
+    <style>
+      body {
+        font-family: Poppins, sans-serif;
+        background: #d6d0c5;
+        color: #3b3b3b;
+        padding: 0 10px;
+        margin: 0;
+        box-sizing: border-box;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        min-height: 100vh;
+      }
+      .container {
+        background: white;
+        max-width: 480px;
+        width: 100%;
+        padding: 20px 30px;
+        border-radius: 12px;
+        box-shadow: 0 4px 14px rgba(0, 0, 0, 0.1);
+        text-align: center;
+        margin: 20px auto; /* biar ada jarak atas bawah juga */
+      }
+      h1 {
+        color: #a6171c;
+        margin-bottom: 16px;
+      }
+      .question {
+        font-weight: 600;
+        margin-bottom: 18px;
+        font-size: 1.1rem;
+      }
+      .options {
+        text-align: left;
+        margin-bottom: 20px;
+      }
+      .option {
+        display: block;
+        margin-bottom: 12px;
+        font-size: 1rem;
+      }
+      input[type="radio"] {
+        margin-right: 8px;
+      }
+      button {
+        background-color: #a6171c;
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        border-radius: 6px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+        margin-top: 10px;
+      }
+      button:hover:not(:disabled) {
+        background-color: #7f0f13;
+      }
+      button:disabled {
+        background-color: #d3a4a6;
+        cursor: not-allowed;
+      }
+      .result {
+        margin-top: 12px;
+        font-weight: 700;
+        font-size: 1.1rem;
+        min-height: 28px;
+      }
+      .footer-note {
+        margin-top: 30px;
+        font-size: 13px;
+        color: #666;
+      }
+
+      /* Responsive untuk layar kecil */
+      @media (max-width: 480px) {
+        .container {
+          padding-left: 30px;
+          padding-right: 30px;
+          padding-top: 30px;
+          padding-bottom: 30px;
+        }
+        .question {
+          font-size: 1rem;
+        }
+        button {
+          width: 100%;
+          padding: 14px;
+          font-size: 1rem;
+        }
+        .options label.option {
+          font-size: 0.95rem;
+        }
+      }
+    </style>
+  </head>
+  <body>
+    <div class="container">
+      <h1>ShineOn Quiz!</h1>
+      <div id="quiz">
+        <div class="question" id="question">Loading...</div>
+        <div class="options" id="options"></div>
+        <button id="submitBtn">Jawab</button>
+        <button id="nextBtn" style="display: none">Soal Berikutnya</button>
+        <div class="result" id="result"></div>
+      </div>
+      <div class="footer-note">
+        <b><i>Enjoy it! </i></b>
+      </div>
+    </div>
+
+    <script>
+      document.addEventListener("DOMContentLoaded", () => {
+        const quizData = [
+          // HTML (7)
+          {
+            question: "Tag HTML untuk membuat hyperlink adalah…",
+            options: ["<a>", "<link>", "<href>", "<hyper>"],
+            answer: 0,
+          },
+          {
+            question: "Tag HTML yang digunakan untuk menampilkan gambar adalah…",
+            options: ["<image>", "<img>", "<src>", "<picture>"],
+            answer: 1,
+          },
+          {
+            question: "Atribut HTML yang digunakan untuk menentukan teks alternatif pada gambar adalah…",
+            options: ["title", "alt", "src", "text"],
+            answer: 1,
+          },
+          {
+            question: "Tag HTML untuk membuat daftar bernomor adalah…",
+            options: ["<ul>", "<ol>", "<li>", "<dl>"],
+            answer: 1,
+          },
+          {
+            question: "Tag HTML untuk heading terbesar adalah…",
+            options: ["<h1>", "<h6>", "<header>", "<heading>"],
+            answer: 0,
+          },
+          {
+            question: "Tag HTML untuk membuat baris baru adalah…",
+            options: ["<br>", "<break>", "<lb>", "<newline>"],
+            answer: 0,
+          },
+          {
+            question: "Elemen HTML <table> digunakan untuk…",
+            options: ["Membuat daftar", "Membuat tabel", "Menyisipkan gambar", "Menampilkan video"],
+            answer: 1,
+          },
+
+          // CSS (7)
+          {
+            question: "Properti CSS untuk mengubah warna teks adalah…",
+            options: ["text-color", "color", "font-color", "text-style"],
+            answer: 1,
+          },
+          {
+            question: "Bagaimana cara menambahkan komentar di CSS?",
+            options: ["// komentar", "<!-- komentar -->", "/* komentar */", "** komentar **"],
+            answer: 2,
+          },
+          {
+            question: "Properti CSS untuk mengubah ukuran teks adalah…",
+            options: ["text-size", "font-size", "size", "text-style"],
+            answer: 1,
+          },
+          {
+            question: "Selector CSS yang memilih semua elemen <p> adalah…",
+            options: ["p { }", ".p { }", "#p { }", "<p> { }"],
+            answer: 0,
+          },
+          {
+            question: "Properti CSS untuk mengubah latar belakang adalah…",
+            options: ["background", "background-color", "bg-color", "bg"],
+            answer: 1,
+          },
+          {
+            question: "Nilai position CSS yang membuat elemen mengikuti scroll halaman adalah…",
+            options: ["fixed", "static", "relative", "absolute"],
+            answer: 0,
+          },
+          {
+            question: "Properti CSS untuk membuat teks menjadi tebal adalah…",
+            options: ["font-weight", "text-bold", "bold", "font-bold"],
+            answer: 0,
+          },
+
+          // JavaScript (6)
+          {
+            question: "Bagaimana cara menampilkan teks di console JavaScript?",
+            options: ['print("Hello")', 'console.log("Hello")', 'log.console("Hello")', 'alert("Hello")'],
+            answer: 1,
+          },
+          {
+            question: "Tipe data untuk nilai true dan false di JavaScript adalah…",
+            options: ["string", "boolean", "integer", "binary"],
+            answer: 1,
+          },
+          {
+            question: "Operator untuk menambah 1 nilai variabel adalah…",
+            options: ["++", "+=", "+1", "increment"],
+            answer: 0,
+          },
+          {
+            question: "Metode JavaScript untuk menampilkan popup peringatan adalah…",
+            options: ["console.log()", "prompt()", "alert()", "confirm()"],
+            answer: 2,
+          },
+          {
+            question: "Kata kunci untuk mendeklarasikan variabel yang nilainya bisa diubah adalah…",
+            options: ["const", "let", "final", "define"],
+            answer: 1,
+          },
+          {
+            question: "Fungsi Math.random() di JavaScript digunakan untuk…",
+            options: ["Menghasilkan angka acak", "Menghitung rata-rata", "Mengubah angka menjadi string", "Mengacak urutan array"],
+            answer: 0,
+          },
+        ];
+
+        const questionEl = document.getElementById("question");
+        const optionsEl = document.getElementById("options");
+        const submitBtn = document.getElementById("submitBtn");
+        const nextBtn = document.getElementById("nextBtn");
+        const resultEl = document.getElementById("result");
+
+        let currentQuestion = null;
+        let answeredCount = 0;
+        let correctCount = 0;
+        let usedQuestions = new Set();
+        let attemptsLeft = 2;
+
+        function getRandomQuestion() {
+          if (usedQuestions.size === quizData.length) {
+            usedQuestions.clear();
+          }
+          let idx;
+          do {
+            idx = Math.floor(Math.random() * quizData.length);
+          } while (usedQuestions.has(idx));
+          usedQuestions.add(idx);
+          return quizData[idx];
+        }
+
+        function loadQuestion() {
+          attemptsLeft = 2;
+          resultEl.textContent = "";
+          submitBtn.disabled = false;
+          nextBtn.style.display = "none";
+
+          currentQuestion = getRandomQuestion();
+          questionEl.textContent = currentQuestion.question;
+          optionsEl.innerHTML = "";
+
+          currentQuestion.options.forEach((opt, i) => {
+            const label = document.createElement("label");
+            label.classList.add("option");
+
+            const input = document.createElement("input");
+            input.type = "radio";
+            input.name = "answer";
+            input.value = i;
+
+            label.appendChild(input);
+            label.appendChild(document.createTextNode(opt));
+            optionsEl.appendChild(label);
+          });
+        }
+
+        function showFinalScore() {
+          questionEl.textContent = "Quiz selesai!";
+          optionsEl.innerHTML = "";
+          submitBtn.style.display = "none";
+          nextBtn.style.display = "none";
+          resultEl.style.color = "#a6171c";
+          resultEl.textContent = `Kamu menjawab benar ${correctCount} dari ${answeredCount} pertanyaan! 🎉`;
+        }
+
+        submitBtn.addEventListener("click", () => {
+          const selected = document.querySelector('input[name="answer"]:checked');
+          if (!selected) {
+            alert("Pilih jawaban dulu ya!");
+            return;
+          }
+
+          const answer = parseInt(selected.value);
+
+          if (answer === currentQuestion.answer) {
+            correctCount++;
+            answeredCount++;
+            resultEl.style.color = "green";
+            resultEl.textContent = "Benar! 🎉";
+            submitBtn.disabled = true;
+            nextBtn.style.display = "inline-block";
+          } else {
+            attemptsLeft--;
+            if (attemptsLeft > 0) {
+              resultEl.style.color = "red";
+              resultEl.textContent = `Salah! Coba lagi. Kesempatan tersisa: ${attemptsLeft}`;
+              // Uncheck semua radio supaya bisa coba lagi
+              const radios = optionsEl.querySelectorAll('input[type="radio"]');
+              radios.forEach((radio) => (radio.checked = false));
+            } else {
+              answeredCount++;
+              resultEl.style.color = "red";
+              resultEl.textContent = `Yahh, nyawa kamu udah habis! Jawaban benar: ${currentQuestion.options[currentQuestion.answer]}`;
+              submitBtn.disabled = true;
+              nextBtn.style.display = "inline-block";
+            }
+          }
+        });
+
+        nextBtn.addEventListener("click", () => {
+          if (answeredCount >= 5) {
+            showFinalScore();
+          } else {
+            loadQuestion();
+          }
+        });
+
+        loadQuestion();
+      });
+    </script>
+  </body>
+</html>
